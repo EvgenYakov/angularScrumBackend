@@ -79,9 +79,10 @@ function generateToken (id,secret,time) {
 const logout = asyncHandler(async (req, res)=>{
     try{
         const {refreshToken} = req.cookies;
-        const token = await Tokens.deleteMany({refreshToken})
+        const token = await Tokens.findOne({refreshToken})
+        await Tokens.deleteMany({userId:token.userId})
         res.clearCookie('refreshToken');
-        return res.json(token)
+        return res.json(true)
     }catch (e) {
         res.status(500)
         throw new Error(e.message)
