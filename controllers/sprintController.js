@@ -77,7 +77,7 @@ const getSprint = asyncHandler(async (req,res)=>{
 const editSprint = asyncHandler(async (req,res)=>{
     try {
         const id = req.params.id
-        const sprint = await Sprint.findOne({_id:id}).populate('tasks')
+        const sprint = await Sprint.findByIdAndUpdate(id,req.body,{new:true}).populate('tasks')
         res.status(200).json(sprint)
     }catch (e) {
         console.log(e);
