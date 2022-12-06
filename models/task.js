@@ -19,7 +19,7 @@ const taskSchema = Schema({
       type:Schema.Types.ObjectId,
         ref:'Sprint',
     },
-    countDays: Number
+    storyPoints: Number
 })
 
 module.exports = model('Task',taskSchema)
