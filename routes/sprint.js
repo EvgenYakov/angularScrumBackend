@@ -6,7 +6,7 @@ const router = Router()
 
 
 router.route('/:id').get(protect,getSprints).post(protect,addSprint)
-router.route('/:id').put(protect,editSprint).delete(protect,deleteSprint)
+router.route('/:id').put(protect,checkExp,editSprint).delete(protect,checkExp,deleteSprint)
 
 router.route('/addTask/:id').patch(protect,checkExp,pushTaskToSprint)
 router.route('/deleteTask/:id').patch(protect,deleteTaskFromSprint)

@@ -10,7 +10,7 @@ const checkExp = asyncHandler(async (req,res,next)=>{
             if (sprint.dateEnd < Date.now()){
                 throw new Error("Спринт просрочен")
             }
-            if (sprint.status < "complete"){
+            if (sprint.status == "complete"){
                 throw new Error("Спринт завершен")
             }
             next()
@@ -26,7 +26,7 @@ const checkExpWithTask = asyncHandler(async (req,res,next)=>{
         if (sprint.dateEnd < Date.now()){
             throw new Error("Спринт просрочен")
         }
-        if (sprint.status < "complete"){
+        if (sprint.status == "complete"){
             throw new Error("Спринт завершен")
         }
         next()

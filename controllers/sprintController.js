@@ -36,10 +36,17 @@ const addSprint = asyncHandler(async(req,res)=>{
 const pushTaskToSprint = asyncHandler(async(req,res)=>{
     try{
         const id = req.params.id;
-        const taskId = req.body.id;
-        await Sprint.updateOne({_id:id},{$push:{tasks:taskId}})
-        await Task.updateOne({_id:taskId},{$set:{sprintId:id}})
-        res.status(200).json(taskId)
+        const task = await Task.findById(req.body.id);
+        if (task.sprintId == id){
+            throw new Error("Task can't be here")
+        }
+        if (task.sprintId) {
+            await Sprint.updateOne({_id:task.sprintId},{$pull:{tasks:task._id}})
+        }
+        task.sprintId = id;
+        await Sprint.updateOne({_id:id},{$push:{tasks:task._id}})
+        await task.save();
+        res.status(200).json(task._id)
     }catch (e) {
         console.log(e)
         res.status(400);
