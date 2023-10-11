@@ -54,6 +54,7 @@ const login = asyncHandler( async (req,res)=>{
 const refresh = asyncHandler(async (req, res)=>{
     try{
         const {refreshToken} = req.cookies;
+        console.log(refreshToken)
         const userData =await jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
         const tokenData = await Tokens.findOne({refreshToken})
         const user = await User.findById(userData.id)
